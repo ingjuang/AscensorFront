@@ -1,22 +1,21 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment.development';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ElevatorService {
-  API_URL:string = `${environment.API_URL}Elevator/`
+export class RequestService {
+  API_URL:string = `${environment.API_URL}Request/`
   headers: HttpHeaders = new HttpHeaders()
   .set('content-type','application/json')
   .set('Access-Control-Allow-Origin', '*')
 
   constructor(private http: HttpClient) { }
-  
 
-  getElevator(){
+  getRequests(){
     let promise = new Promise((resolve, reject)=>{
-      let url = `${this.API_URL}GetCurrentFloor`;
+      let url = `${this.API_URL}GetRequests`;
       this.http.get(url, {headers: this.headers})
         .toPromise()
         .then(
@@ -31,10 +30,11 @@ export class ElevatorService {
     return promise;
   }
 
-  setRequest(request: any){
+  
+  stopElevator(){
     let promise = new Promise((resolve, reject)=>{
-      let url = `${this.API_URL}AddRequestToGo?floor=${request}`;
-      this.http.post(url, request, {headers: this.headers})
+      let url = `${this.API_URL}StopElevator`;
+      this.http.post(url, {headers: this.headers})
         .toPromise()
         .then(
           (res: any) =>{
@@ -47,22 +47,4 @@ export class ElevatorService {
     })
     return promise
   }
-  
-  OpenDoors(){
-    let promise = new Promise((resolve, reject)=>{
-      let url = `${this.API_URL}OpenDoors`;
-      this.http.post(url, {headers: this.headers})
-        .toPromise()
-        .then(
-          (res: any) =>{
-            resolve(res);
-          },
-          msg =>{
-            reject(msg)
-          }
-        );
-    })
-    return promise;
-  }
-
 }

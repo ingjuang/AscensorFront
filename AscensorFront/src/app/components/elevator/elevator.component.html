@@ -5,26 +5,25 @@
             <tbody>
                 <tr>
                     <td>
-                        <h4>Piso Actual:</h4>
+                        <h4>Piso Actual: {{currentFloor}}</h4>
                         <samp>Selecciona el piso para solicitar ascensor </samp>
-                        <select>
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
-                            <option>6</option>
-                            <option>7</option>
-                            <option>8</option>
-                            <option>9</option>
-                            <option>10</option>
+                        <select [(ngModel)]="currentFloor">
+                            @for (item of floors; track item){
+                                <option>{{item}}</option>
+                            }
                         </select>
+
+                        <button (click)="requestElevator()">Solicitar</button>
                     </td>
                     <td style="padding-left: 100px;">
                         <h4>Ascensor</h4>
-                        <p>Piso: </p>
-                        <button>Subir</button>
-                        <button>Bajar</button>
+                        <p>Piso: {{elevator.currentFloor}}</p>
+                    </td>
+                    <td style="padding-left: 100px;">
+                        <h4>Lista de peticiones</h4>
+                        @for (item of requests; track $index) {
+                            <p>{{item.floorToGo}}</p>
+                        }
                     </td>
                 </tr>
             </tbody>
@@ -36,22 +35,26 @@
     <table>
         <tbody>
             <tr>
-                <td><button>1</button></td>
-                <td><button>2</button></td>
-                <td><button>3</button></td>
+                <td><button (click)="requestElevatorToGo(1)">1</button></td>
+                <td><button (click)="requestElevatorToGo(2)">2</button></td>
+                <td><button (click)="requestElevatorToGo(3)">3</button></td>
             </tr>
             <tr>
-                <td><button>4</button></td>
-                <td><button>5</button></td>
-                <td><button>6</button></td>
+                <td><button (click)="requestElevatorToGo(4)">4</button></td>
+                <td><button (click)="requestElevatorToGo(5)">5</button></td>
+                <td><button (click)="requestElevatorToGo(6)">6</button></td>
             </tr>
             <tr>
-                <td><button>7</button></td>
-                <td><button>8</button></td>
-                <td><button>9</button></td>
+                <td><button (click)="requestElevatorToGo(7)">7</button></td>
+                <td><button (click)="requestElevatorToGo(8)">8</button></td>
+                <td><button (click)="requestElevatorToGo(9)">9</button></td>
             </tr>
 
         </tbody>
     </table>
-    <button>Detener</button>
+    <button (click)="openDoors()">Detener</button>
+    <p>{{openDoorsRes}}</p>
+    <br>
+    <button (click)="stopElevator()">Abrir puertas</button>
+    <p>{{stopMess}}</p>
 </div>
